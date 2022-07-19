@@ -36,9 +36,7 @@ app.post("/planilha", function(request, response) {
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
     
-    var url = "https://sheetdb.io/api/v1/zzmes3we8nbnp";
-    
-    return axios.get(url).then( res => {
+    return axios.get("https://sheetdb.io/api/v1/zzmes3we8nbnp").then( res => {
       res.data.map(person => {
         
         if (person.Pedido == np) {
