@@ -97,7 +97,7 @@ app.post("/planilha", function(request, response) {
   
    if (intentName == "total_pedidos") {
    
-    axios.get('https://sheetdb.io/api/v1/58f61be4dda40/count')
+    axios.get('https://sheetdb.io/api/v1/zzmes3we8nbnp/count')
     .then( res => {
            
        response.json({"fulfillmentText" : "Total de pedidos = " + res.data.rows}); 
