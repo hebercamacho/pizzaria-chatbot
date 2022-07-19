@@ -33,6 +33,9 @@ app.post("/planilha", function(request, response) {
   if (intentName == "consultar_pedido") {
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
+    
+    var url = "https://docs.google.com/spreadsheets/d/1lEsYaFcs2lirK-QFI-dhQVdizXx0J861c5qwNgx8PFY/edit#gid=0";
+    return axios.get(url).then(response)
   }
 
 });
