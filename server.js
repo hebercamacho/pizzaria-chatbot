@@ -34,12 +34,13 @@ app.post("/planilha", function(request, response) {
     
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
-
     
     var url = "https://sheetdb.io/api/v1/zzmes3we8nbnp";
     
     return axios.get(url).then(res => {
       res.data.map(person => {
+        
+        response.json({"fulfillmentText" : "Pedido " + np + "person=" + person.Pedido});
 
         if (person.Pedido == np) {
           
@@ -48,33 +49,28 @@ app.post("/planilha", function(request, response) {
             {
               "card": {
                  "title": "Pizzaria PLN ",
-                 "subtitle": "Pedido = " + npame,
-                  "imageUri": "https://cdn.glitch.com/ed90767e-7d31-49a0-944f-1e1f4f07b572%2Fprevisao.png?v=1615465390523"
+                 "subtitle": "Pedido = " + np,
+                  "imageUri": "https://cdn.glitch.global/ed90767e-7d31-49a0-944f-1e1f4f07b572/pizza.png?v=1658261784666"
               }
             },
             {
              "text" :{
-                "text": ["Temperatura atual = " + temperaturaAtual + "º"]
+                "text": ["Nome = " + person.Nome]
              }
             },
             {
              "text" :{
-                "text": ["Temperatura máxima = " + temperaturaMaxima + "º"]
-             }
-            },
-            {
-             "text" :{
-                "text": ["Temperatura mínima = " + temperaturaMinima + "º"]
+                "text": ["Status = " + person.Status]
              }
             }
              
            ]
-        });
+          });
 
-          
-          response.json({"fulfillmentText" : "Nome no pedido " + person.Nome});
         } else {
+          
           response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});
+          
         }
             
       });
