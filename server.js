@@ -35,7 +35,14 @@ app.post("/planilha", function(request, response) {
     var np  = request.body.queryResult.parameters['numero_pedido'];
     
     var url = "https://docs.google.com/spreadsheets/d/1lEsYaFcs2lirK-QFI-dhQVdizXx0J861c5qwNgx8PFY/edit#gid=0";
-    return axios.get(url).then(response)
+    
+    return axios.get(url).then(res => {
+      res.data.map(person => {
+        if (person.Pedido == np) {
+          response.json({"fulfillmentText" : "Nome no pedido " + person.Nome});
+        }
+      });
+    });
   }
 
 });
