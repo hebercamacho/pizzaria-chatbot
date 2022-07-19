@@ -40,16 +40,14 @@ app.post("/planilha", function(request, response) {
     return axios.get(url).then(res => {
       res.data.map(person => {
         
-        response.json({"fulfillmentText" : "Pedido " + np + "person=" + person.Pedido});
-
-        if (person.Pedido == np) {
+        if (person.Pedido === np) {
           
            response.json({"fulfillmentMessages":
            [
             {
               "card": {
                  "title": "Pizzaria PLN ",
-                 "subtitle": "Pedido = " + np,
+                 "subtitle": "Número do Pedido = " + np,
                   "imageUri": "https://cdn.glitch.global/ed90767e-7d31-49a0-944f-1e1f4f07b572/pizza.png?v=1658261784666"
               }
             },
