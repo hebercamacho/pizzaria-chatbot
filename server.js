@@ -68,10 +68,19 @@ app.post("/planilha", function(request, response) {
     
   }
   
-   if (intentName == "consultar_pedido") {
+  if (intentName == "cadastrar_pedido") {
     
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
+    var nome  = request.body.queryResult.parameters['nome'];
+    var status  = request.body.queryResult.parameters['status'];
+    
+    const dados = [{Pedido: np, Nome: nome, Status: status}];
+    
+    axios.post("https://sheetdb.io/api/v1/zzmes3we8nbnp", dados);
+    
+    response.json({"fulfillmentText" : "Pedido cadastrado com sucesso..."});
+  }
 
 });
 
