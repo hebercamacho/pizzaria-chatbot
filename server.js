@@ -31,18 +31,55 @@ app.post("/planilha", function(request, response) {
   var intentName = request.body.queryResult.intent.displayName;
   
   if (intentName == "consultar_pedido") {
+    
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
+
     
-    var url = "https://docs.google.com/spreadsheets/d/1lEsYaFcs2lirK-QFI-dhQVdizXx0J861c5qwNgx8PFY/edit#gid=0";
+    var url = "https://sheetdb.io/api/v1/zzmes3we8nbnp";
     
     return axios.get(url).then(res => {
       res.data.map(person => {
+
         if (person.Pedido == np) {
+          
+           response.json({"fulfillmentMessages":
+           [
+            {
+              "card": {
+                 "title": "Pizzaria PLN ",
+                 "subtitle": "Pedido = " + npame,
+                  "imageUri": "https://cdn.glitch.com/ed90767e-7d31-49a0-944f-1e1f4f07b572%2Fprevisao.png?v=1615465390523"
+              }
+            },
+            {
+             "text" :{
+                "text": ["Temperatura atual = " + temperaturaAtual + "º"]
+             }
+            },
+            {
+             "text" :{
+                "text": ["Temperatura máxima = " + temperaturaMaxima + "º"]
+             }
+            },
+            {
+             "text" :{
+                "text": ["Temperatura mínima = " + temperaturaMinima + "º"]
+             }
+            }
+             
+           ]
+        });
+
+          
           response.json({"fulfillmentText" : "Nome no pedido " + person.Nome});
+        } else {
+          response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});
         }
+            
       });
     });
+    
   }
 
 });
