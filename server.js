@@ -81,6 +81,25 @@ app.post("/planilha", function(request, response) {
     
     response.json({"fulfillmentText" : "Pedido cadastrado com sucesso..."});
   }
+  
+   if (intentName == "atualizar_pedido") {
+    
+   
+    var np  = request.body.queryResult.parameters['numero_pedido'];
+    var status  = request.body.queryResult.parameters['status'];
+    
+    const dados = [{Pedido: np, Status: status}];
+    
+    axios.patch("https://sheetdb.io/api/v1/zzmes3we8nbnp/Pedido/" + np, dados);
+    
+    response.json({"fulfillmentText" : "Pedido atualizado com sucesso..."});
+  }
+  
+   if (intentName == "total_pedidos") {
+   
+     response.json({"fulfillmentText" : "Total de pedidos = "});
+     
+   }
 
 });
 
