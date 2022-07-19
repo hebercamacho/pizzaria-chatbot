@@ -26,6 +26,7 @@ app.get("/", (request, response) => {
 
 
 
+
 app.post("/planilha", function(request, response) {
 
   var intentName = request.body.queryResult.intent.displayName;
@@ -37,8 +38,8 @@ app.post("/planilha", function(request, response) {
     
     var url = "https://sheetdb.io/api/v1/zzmes3we8nbnp";
     
-    return axios.get(url).then(res => {
-      res.data.map(person => {
+    return axios.get(url).then( res => 
+      res.data.items.map(person => {
         
         if (person.Pedido == np) {
           
