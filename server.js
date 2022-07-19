@@ -40,7 +40,7 @@ app.post("/planilha", function(request, response) {
     return axios.get(url).then(res => {
       res.data.map(person => {
         
-        if (person.Pedido === np) {
+        if (person.Pedido == np) {
           
            response.json({"fulfillmentMessages":
            [
