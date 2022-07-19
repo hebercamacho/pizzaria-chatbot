@@ -39,8 +39,6 @@ app.post("/planilha", function(request, response) {
     return axios.get("https://sheetdb.io/api/v1/zzmes3we8nbnp/search?Pedido=" + np).then( res => {
       res.data.map( person => {
         
-        //if (person.Pedido == np) {
-          
            response.json({"fulfillmentMessages":
            [
             {
@@ -64,16 +62,16 @@ app.post("/planilha", function(request, response) {
            ]
           });
 
-       // } else {
-          
-       //   response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});
-          
-       // }
             
       });
     });
     
   }
+  
+   if (intentName == "consultar_pedido") {
+    
+   
+    var np  = request.body.queryResult.parameters['numero_pedido'];
 
 });
 
