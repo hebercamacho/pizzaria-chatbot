@@ -90,7 +90,9 @@ app.post("/planilha", function(request, response) {
     
     const dados = [{Pedido: np, Status: status}];
     
-    axios.patch("https://sheetdb.io/api/v1/zzmes3we8nbnp/Pedido/" + np, dados);
+    axios.patch("https://sheetdb.io/api/v1/zzmes3we8nbnp/Pedido/" + np, dados).then( res => {
+      
+    }); 
     
     response.json({"fulfillmentText" : "Pedido atualizado com sucesso..."});
   }
