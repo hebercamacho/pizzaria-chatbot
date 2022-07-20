@@ -82,7 +82,7 @@ app.post("/planilha", function(request, response) {
     response.json({"fulfillmentText" : "Pedido cadastrado com sucesso..."});
   }
   
-   if (intentName == "atualizar_pedido") {
+   if (intentName == "atualizar_status") {
     
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
