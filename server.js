@@ -37,7 +37,12 @@ app.post("/planilha", function(request, response) {
     var np  = request.body.queryResult.parameters['numero_pedido'];
     
     return axios.get("https://sheetdb.io/api/v1/zzmes3we8nbnp/search?Pedido=" + np).then( res => {
+      
+     if (res.data.length === 0)
+      return response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});  
+
       res.data.map( person => {
+        
         
            response.json({"fulfillmentMessages":
            [
@@ -91,10 +96,17 @@ app.post("/planilha", function(request, response) {
     const dados = [{Pedido: np, Status: status}];
     
     axios.patch("https://sheetdb.io/api/v1/zzmes3we8nbnp/Pedido/" + np, dados).then( res => {
-      
-    }); 
     
-    response.json({"fulfillmentText" : "Pedido atualizado com sucesso..."});
+      response.json({"fulfillmentText" : "Pedido atualizado com sucesso..."});
+      
+    })
+    .catch(error => { 
+    
+       response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});  
+           
+     });
+    
+    
   }
   
    if (intentName == "total_pedidos") {
