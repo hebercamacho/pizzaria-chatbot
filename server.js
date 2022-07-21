@@ -31,8 +31,7 @@ app.post("/pizzaria", function(request, response) {
 
   var intentName = request.body.queryResult.intent.displayName;
   
-  if (intentName == "consultar_pedido") {
-    
+  if (intentName == "consultar_pedido") {    
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
     
@@ -74,23 +73,27 @@ app.post("/pizzaria", function(request, response) {
   }
   
   if (intentName == "cadastrar_pedido") {
-    var
+    var np=0;
     axios.get('https://sheetdb.io/api/v1/8cg2kxdnvfg9b/count')
      
-    .then( res => {
-           
-       response.json({"fulfillmentText" : "Total de pedidos = " + res.data.rows}); 
-      
+    .then( res => {           
+       np = res.data.rows + 1;       
     });
-    var np  = request.body.queryResult.parameters['numero_pedido'];
-    var nome  = request.body.queryResult.parameters['nome'];
-    var status  = request.body.queryResult.parameters['status'];
     
-    const dados = [{Pedido: np, Nome: nome, Status: status}];
+    var nome  = request.body.queryResult.parameters['nome_cliente'];
+    var sabor = request.body.queryResult.parameters['sabor_pizza'];
+    var status  = 'pedido recebido';
+    console.log(np)
+    const dados = [{Pedido: np, Nome: nome, Sabor: sabor, Status: status}];
     
-    axios.post("https://sheetdb.io/api/v1/8cg2kxdnvfg9b", dados);
+    axios.post("https://sheetdb.io/api/v1/8cg2kxdnvfg9b", dados)
+    .then( res => {
+      return response.json({"fulfillmentText" : "Pedido " + np + " cadastrado com sucesso."});
+    })
+    .catch( error => {
+      return response.json({"fulfillmentText" : "Houve um erro no cadastro do seu pedido. " + error});
+    });    
     
-    response.json({"fulfillmentText" : "Pedido cadastrado com sucesso..."});
   }
   
    if (intentName == "atualizar_status") {
