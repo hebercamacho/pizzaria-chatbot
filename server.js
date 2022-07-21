@@ -27,7 +27,7 @@ app.get("/", (request, response) => {
 
 
 
-app.post("/pizzaria", function(request, response) {
+app.post("/pizzaria", async function(request, response) {
 
   var intentName = request.body.queryResult.intent.displayName;
   
@@ -35,7 +35,7 @@ app.post("/pizzaria", function(request, response) {
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
     
-    return axios.get("https://sheetdb.io/api/v1/8cg2kxdnvfg9b?Pedido=" + np).then( res => {
+    axios.get("https://sheetdb.io/api/v1/8cg2kxdnvfg9b?Pedido=" + np).then( res => {
       
      if (res.data.length === 0)
       return response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});  
@@ -43,7 +43,7 @@ app.post("/pizzaria", function(request, response) {
       res.data.map( person => {
         
         
-           response.json({"fulfillmentMessages":
+           return response.json({"fulfillmentMessages":
            [
             {
               "card": {
@@ -74,8 +74,7 @@ app.post("/pizzaria", function(request, response) {
   
   if (intentName == "cadastrar_pedido") {
     var np=0;
-    axios.get('https://sheetdb.io/api/v1/8cg2kxdnvfg9b/count')
-     
+    await axios.get('https://sheetdb.io/api/v1/8cg2kxdnvfg9b/count')
     .then( res => {           
        np = res.data.rows + 1;       
     });
