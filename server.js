@@ -88,7 +88,6 @@ app.post("/planilha", function(request, response) {
   }
   
    if (intentName == "atualizar_status") {
-    
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
     var status  = request.body.queryResult.parameters['status'];
@@ -106,12 +105,12 @@ app.post("/planilha", function(request, response) {
            
      });
     
-    
   }
   
    if (intentName == "total_pedidos") {
    
     axios.get('https://sheetdb.io/api/v1/zzmes3we8nbnp/count')
+     
     .then( res => {
            
        response.json({"fulfillmentText" : "Total de pedidos = " + res.data.rows}); 
