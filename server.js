@@ -27,7 +27,7 @@ app.get("/", (request, response) => {
 
 
 
-app.post("/planilha", function(request, response) {
+app.post("/pizzaria", function(request, response) {
 
   var intentName = request.body.queryResult.intent.displayName;
   
@@ -36,7 +36,7 @@ app.post("/planilha", function(request, response) {
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
     
-    return axios.get("https://sheetdb.io/api/v1/zzmes3we8nbnp/search?Pedido=" + np).then( res => {
+    return axios.get("https://sheetdb.io/api/v1/8cg2kxdnvfg9b?Pedido=" + np).then( res => {
       
      if (res.data.length === 0)
       return response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});  
@@ -74,15 +74,21 @@ app.post("/planilha", function(request, response) {
   }
   
   if (intentName == "cadastrar_pedido") {
-    
-   
+    var
+    axios.get('https://sheetdb.io/api/v1/8cg2kxdnvfg9b/count')
+     
+    .then( res => {
+           
+       response.json({"fulfillmentText" : "Total de pedidos = " + res.data.rows}); 
+      
+    });
     var np  = request.body.queryResult.parameters['numero_pedido'];
     var nome  = request.body.queryResult.parameters['nome'];
     var status  = request.body.queryResult.parameters['status'];
     
     const dados = [{Pedido: np, Nome: nome, Status: status}];
     
-    axios.post("https://sheetdb.io/api/v1/zzmes3we8nbnp", dados);
+    axios.post("https://sheetdb.io/api/v1/8cg2kxdnvfg9b", dados);
     
     response.json({"fulfillmentText" : "Pedido cadastrado com sucesso..."});
   }
@@ -94,7 +100,7 @@ app.post("/planilha", function(request, response) {
     
     const dados = [{Pedido: np, Status: status}];
     
-    axios.patch("https://sheetdb.io/api/v1/zzmes3we8nbnp/Pedido/" + np, dados).then( res => {
+    axios.patch("https://sheetdb.io/api/v1/8cg2kxdnvfg9b/Pedido/" + np, dados).then( res => {
     
       response.json({"fulfillmentText" : "Pedido atualizado com sucesso..."});
       
@@ -109,7 +115,7 @@ app.post("/planilha", function(request, response) {
   
    if (intentName == "total_pedidos") {
    
-    axios.get('https://sheetdb.io/api/v1/zzmes3we8nbnp/count')
+    axios.get('https://sheetdb.io/api/v1/8cg2kxdnvfg9b/count')
      
     .then( res => {
            
