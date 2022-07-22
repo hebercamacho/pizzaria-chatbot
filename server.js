@@ -35,13 +35,12 @@ app.post("/pizzaria", async function(request, response) {
    
     var np  = request.body.queryResult.parameters['numero_pedido'];
     
-    axios.get("https://sheetdb.io/api/v1/8cg2kxdnvfg9b?Pedido=" + np).then( res =>{
+    axios.get("https://sheetdb.io/api/v1/8cg2kxdnvfg9b/search?Pedido=" + np).then( res =>{
       if (res.data.length === 0)
       {
         return response.json({"fulfillmentText" : "Pedido " + np + " não encontrado!!!"});  
       }
       
-      console.log(res)
       res.data.map( person => {
            response.json({"fulfillmentMessages":
            [
@@ -59,6 +58,11 @@ app.post("/pizzaria", async function(request, response) {
             },
             {
              "text" :{
+                "text": ["Sabor = " + person.Sabor]
+             }
+            },
+             {
+             "text" :{
                 "text": ["Status = " + person.Status]
              }
             }
@@ -68,7 +72,6 @@ app.post("/pizzaria", async function(request, response) {
 
             
       });
-      console.log(response)
     });
     
   }
@@ -83,7 +86,6 @@ app.post("/pizzaria", async function(request, response) {
     var nome  = request.body.queryResult.parameters['nome_cliente'];
     var sabor = request.body.queryResult.parameters['sabor_pizza'];
     var status  = 'pedido recebido';
-    console.log(np)
     const dados = [{Pedido: np, Nome: nome, Sabor: sabor, Status: status}];
     
     axios.post("https://sheetdb.io/api/v1/8cg2kxdnvfg9b", dados)
