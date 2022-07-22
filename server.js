@@ -69,10 +69,14 @@ app.post("/pizzaria", async function(request, response) {
              
            ]
           });
-
-            
+          console.log(response);
+        })
+      })
+      .catch( error => {
+        console.log(error);
+        response.json({"fulfillmentText:": "deu ruim no seu pedido"});
       });
-    });
+    
     
   }
   
